@@ -1,7 +1,7 @@
 {
   "name": "dsh-session-mark",
   "version": "0.1.0",
-  "description": "Quiet gradient marks for the DeepSeek Harness session list.",
+  "description": "Adds a gradient background to sessions in the left session list so they are easier to tell apart.",
   "type": "module",
   "license": "MIT",
   "author": "Makk",
