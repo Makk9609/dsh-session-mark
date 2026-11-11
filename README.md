@@ -1,8 +1,7 @@
 # dsh-session-mark
 
-A right-click color mark for sessions in the DeepSeek Harness left session list.
-Pick one of eight low-saturation gradient washes; the row keeps its text, layout,
-and normal hover/selected feedback.
+Quiet gradient marks for the DeepSeek Harness session list. Right-click a session,
+pick one of eight washes; the row keeps its text and layout.
 
 English | [中文](README.zh.md)
 

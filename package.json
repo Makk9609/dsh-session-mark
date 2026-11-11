@@ -1,7 +1,7 @@
 {
   "name": "dsh-session-mark",
   "version": "0.1.0",
-  "description": "DeepSeek Harness session color marks: eight low-saturation gradient washes for the left session list, applied from the session context menu.",
+  "description": "Quiet gradient marks for the DeepSeek Harness session list.",
   "type": "module",
   "license": "MIT",
   "author": "Makk",

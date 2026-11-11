@@ -1,6 +1,6 @@
 # dsh-session-mark
 
-DeepSeek Harness 左侧会话列表的右键颜色标记。八档低饱和渐变底纹，不改文字、布局和宿主原有反馈。
+DeepSeek Harness 左侧会话列表的低饱和渐变标记。右键选一档，文字与布局不动。
 
 [English](README.md) | 中文
 
