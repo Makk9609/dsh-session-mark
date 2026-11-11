@@ -4,6 +4,10 @@ DeepSeek Harness 左侧会话列表的右键颜色标记。八档低饱和渐变
 
 [English](README.md) | 中文
 
+![会话标记菜单与颜色子菜单](assets/session-mark-menu.png)
+
+![左侧会话列表中已标记的会话行](assets/session-mark-row.png)
+
 ## 作用
 
 - 右键左侧会话列表里的会话，选择 **会话标记**，再点一条渐变色条；最后一条空白条清除标记。

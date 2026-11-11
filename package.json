@@ -41,6 +41,8 @@
     "README.zh.md",
     "CHANGELOG.md",
     "LICENSE",
+    "assets",
+    "screenshots.json",
     "test"
   ],
   "scripts": {

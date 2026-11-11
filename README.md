@@ -6,6 +6,10 @@ and normal hover/selected feedback.
 
 English | [中文](README.zh.md)
 
+![The session menu with the color submenu open](assets/session-mark-menu.png)
+
+![A marked session row in the left session list](assets/session-mark-row.png)
+
 ## What it does
 
 - Right-click a session in the left session list, choose **会话标记**
