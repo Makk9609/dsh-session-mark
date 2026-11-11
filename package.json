@@ -1,0 +1,63 @@
+{
+  "name": "dsh-session-mark",
+  "version": "0.1.0",
+  "description": "DeepSeek Harness session color marks: eight low-saturation gradient washes for the left session list, applied from the session context menu.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Makk",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Makk9609/dsh-session-mark.git"
+  },
+  "homepage": "https://github.com/Makk9609/dsh-session-mark",
+  "bugs": {
+    "url": "https://github.com/Makk9609/dsh-session-mark/issues"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "cordis",
+    "session",
+    "sidebar",
+    "color",
+    "gradient"
+  ],
+  "icon": "./icon.svg",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md",
+    "README.zh.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "test"
+  ],
+  "scripts": {
+    "test": "node test/smoke.mjs"
+  },
+  "dsh": {
+    "manifestVersion": 1,
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-context-menu",
+        "@deepseek-ai/dsh-client-locale"
+      ]
+    }
+  }
+}
