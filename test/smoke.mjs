@@ -64,7 +64,7 @@ assert.ok(plugin.inject.includes('contextMenus'))
 plugin.apply(ctx)
 
 assert.match(style.textContent, /--dsh-session-mark-wine:/)
-assert.equal(icons.length, 9)
+assert.equal(icons.length, 1)
 assert.equal(menu.target, 'session')
 assert.equal(menu.order, 500)
 
@@ -95,7 +95,7 @@ assert.equal(noneSvg.children.length, 2)
 wine.run()
 assert.match(style.textContent, /\[data-row-key="session:session-1"\]\{background-image:var\(--dsh-session-mark-wine\)\}/)
 assert.equal(JSON.parse(storage.get('dsh.session-marks.v1')).marks['session-1'], 'wine')
-assert.equal(menu.resolve({ sessionId: 'session-1' })[0].icon.key, 'session-mark.wine')
+assert.equal(menu.resolve({ sessionId: 'session-1' })[0].icon.key, 'session-mark.none')
 
 none.run()
 assert.doesNotMatch(style.textContent, /\[data-row-key="session:session-1"\]/)

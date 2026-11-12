@@ -107,39 +107,22 @@ window.__ModuleLoader__.load({
       localStorage.setItem(STORAGE_KEY, JSON.stringify({ v: 1, marks }))
     }
 
-    function StyleChip({ styleId, label }) {
-      const styleDef = STYLE_BY_ID.get(styleId)
-      if (styleDef === undefined) {
-        return h('svg', {
-          viewBox: '0 0 16 16',
-          width: 14,
-          height: 14,
-          fill: 'none',
-          stroke: 'currentColor',
-          strokeWidth: 1.5,
-          strokeLinecap: 'round',
-          strokeLinejoin: 'round',
-          role: 'img',
-          'aria-label': label,
-          style: { display: 'block' }
-        },
-          h('path', { d: 'M2.5 2.5h5l6 6-5.5 5.5-6-6z' }),
-          h('circle', { cx: 5.5, cy: 5.5, r: 1, fill: 'currentColor', stroke: 'none' })
-        )
-      }
-      return h('span', {
-        role: 'img',
-        'aria-label': label,
-        style: {
-          display: 'inline-flex',
-          flex: 'none',
-          width: 14,
-          height: 14,
-          borderRadius: 3,
-          backgroundColor: 'var(--dsw-alias-bg-layer-2)',
-          backgroundImage: previewGradient(styleDef)
-        }
-      })
+    function MenuTag() {
+      return h('svg', {
+        viewBox: '0 0 16 16',
+        width: 14,
+        height: 14,
+        fill: 'none',
+        stroke: 'currentColor',
+        strokeWidth: 1.5,
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        'aria-hidden': true,
+        style: { display: 'block' }
+      },
+        h('path', { d: 'M2.5 2.5h5l6 6-5.5 5.5-6-6z' }),
+        h('circle', { cx: 5.5, cy: 5.5, r: 1, fill: 'currentColor', stroke: 'none' })
+      )
     }
 
     const VISUALLY_HIDDEN = {
@@ -231,15 +214,9 @@ window.__ModuleLoader__.load({
         }, 'session mark: storage sync')
 
         ctx.slots.inject('contextMenu.icon', function* () {
-          for (const styleDef of STYLES) {
-            yield ctx.slots.register(
-              { name: 'contextMenu.icon', key: `session-mark.${styleDef.id}` },
-              () => h(StyleChip, { styleId: styleDef.id, label: t(`style.${styleDef.id}`) })
-            )
-          }
           yield ctx.slots.register(
             { name: 'contextMenu.icon', key: 'session-mark.none' },
-            () => h(StyleChip, { styleId: 'none', label: t('style.none') })
+            () => h(MenuTag)
           )
         })
 
@@ -248,11 +225,10 @@ window.__ModuleLoader__.load({
           target: 'session',
           order: 500,
           resolve: ({ sessionId }) => {
-            const current = STYLE_BY_ID.has(marks[sessionId]) ? marks[sessionId] : undefined
             return [{
               id: 'mark',
               label: t('menu.label'),
-              icon: { key: `session-mark.${current === undefined ? 'none' : current}` },
+              icon: { key: 'session-mark.none' },
               children: [
                 ...STYLES.map((styleDef) => ({
                   id: styleDef.id,
