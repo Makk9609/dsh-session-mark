@@ -62,12 +62,12 @@ window.__ModuleLoader__.load({
     function gradient(style, mode) {
       const alpha = ALPHA[mode]
       const stops = STOPS.map((stop, index) => `rgba(${style.rgb}, ${alpha[index]}) ${stop}%`)
-      return `linear-gradient(90deg, ${stops.join(', ')})`
+      return `linear-gradient(270deg, ${stops.join(', ')})`
     }
 
     function previewGradient(style) {
       const stops = STOPS.map((stop, index) => `rgba(${style.rgb}, ${PREVIEW_ALPHA[index]}) ${stop}%`)
-      return `linear-gradient(90deg, ${stops.join(', ')})`
+      return `linear-gradient(270deg, ${stops.join(', ')})`
     }
 
     const BASE_CSS = (() => {
