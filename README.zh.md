@@ -5,6 +5,8 @@
 
 [English](README.md) | 中文
 
+![亮色模式](assets/session-mark-light.png)
+
 ![会话标记菜单](assets/session-mark-menu.png)
 
 ![已标记的会话行](assets/session-mark-row.png)

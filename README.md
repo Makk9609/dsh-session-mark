@@ -5,6 +5,8 @@ to a session row so you can tell sessions apart and avoid opening the wrong one.
 
 English | [中文](README.zh.md)
 
+![Light theme](assets/session-mark-light.png)
+
 ![Session menu with the color submenu open](assets/session-mark-menu.png)
 
 ![A marked session row](assets/session-mark-row.png)
