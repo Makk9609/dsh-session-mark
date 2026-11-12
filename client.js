@@ -23,12 +23,12 @@ window.__ModuleLoader__.load({
       { id: 'graphite', rgb: '74, 79, 87' }
     ]
     const STYLE_BY_ID = new Map(STYLES.map((style) => [style.id, style]))
-    const STOPS = [0, 30, 58, 80, 100]
+    const STOPS = [0, 25, 50, 75, 100]
     const ALPHA = {
-      light: [0.34, 0.20, 0.08, 0.02, 0],
-      dark: [0.62, 0.38, 0.16, 0.04, 0]
+      light: [0, 0.10, 0.34, 0.10, 0],
+      dark: [0, 0.18, 0.62, 0.18, 0]
     }
-    const PREVIEW_ALPHA = [0.92, 0.72, 0.36, 0.06, 0]
+    const PREVIEW_ALPHA = [0, 0.30, 0.92, 0.30, 0]
 
     const DICTS = {
       zh: {
@@ -62,12 +62,12 @@ window.__ModuleLoader__.load({
     function gradient(style, mode) {
       const alpha = ALPHA[mode]
       const stops = STOPS.map((stop, index) => `rgba(${style.rgb}, ${alpha[index]}) ${stop}%`)
-      return `linear-gradient(270deg, ${stops.join(', ')})`
+      return `linear-gradient(90deg, ${stops.join(', ')})`
     }
 
     function previewGradient(style) {
       const stops = STOPS.map((stop, index) => `rgba(${style.rgb}, ${PREVIEW_ALPHA[index]}) ${stop}%`)
-      return `linear-gradient(270deg, ${stops.join(', ')})`
+      return `linear-gradient(90deg, ${stops.join(', ')})`
     }
 
     const BASE_CSS = (() => {
