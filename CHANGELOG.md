@@ -2,6 +2,11 @@
 
 Notable changes per release. Versions follow [SemVer](https://semver.org/).
 
+## Unreleased
+
+- Added three hand-drawn line patterns (star, cat, dog) as session mark styles.
+- 中文：新增星星、猫、狗三个手绘线条图案样式。
+
 ## v0.1.0 — 2026-11-11
 
 - First release. Right-click a session in the left session list to apply one of

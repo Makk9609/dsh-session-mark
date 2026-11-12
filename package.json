@@ -1,7 +1,7 @@
 {
   "name": "dsh-session-mark",
   "version": "0.1.0",
-  "description": "Adds a gradient background to sessions in the left session list so they are easier to tell apart.",
+  "description": "Adds a gradient or a hand-drawn line pattern to sessions in the left session list so they are easier to tell apart.",
   "type": "module",
   "license": "MIT",
   "author": "Makk",

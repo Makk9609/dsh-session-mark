@@ -42,6 +42,9 @@ window.__ModuleLoader__.load({
         'style.indigo': '靛蓝渐变',
         'style.plum': '紫檀渐变',
         'style.graphite': '玄灰渐变',
+        'pattern.star': '星星',
+        'pattern.cat': '猫',
+        'pattern.dog': '狗',
         'style.none': '无标记'
       },
       en: {
@@ -55,6 +58,9 @@ window.__ModuleLoader__.load({
         'style.indigo': 'Indigo gradient',
         'style.plum': 'Plum gradient',
         'style.graphite': 'Graphite gradient',
+        'pattern.star': 'Star',
+        'pattern.cat': 'Cat',
+        'pattern.dog': 'Dog',
         'style.none': 'No mark'
       }
     }
@@ -95,7 +101,7 @@ window.__ModuleLoader__.load({
         }
         const marks = {}
         for (const [sessionId, styleId] of Object.entries(parsed.marks)) {
-          if (SAFE_ID.test(sessionId) && STYLE_BY_ID.has(styleId)) marks[sessionId] = styleId
+          if (SAFE_ID.test(sessionId) && MARK_BY_ID.has(styleId)) marks[sessionId] = styleId
         }
         return { marks, error: null }
       } catch (error) {
@@ -123,6 +129,63 @@ window.__ModuleLoader__.load({
         h('path', { d: 'M2.5 2.5h5l6 6-5.5 5.5-6-6z' }),
         h('circle', { cx: 5.5, cy: 5.5, r: 1, fill: 'currentColor', stroke: 'none' })
       )
+    }
+
+    const PATTERN_SVG = {
+      viewBox: '0 0 16 16',
+      width: 14,
+      height: 14,
+      fill: 'none',
+      stroke: 'currentColor',
+      strokeWidth: 1.3,
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      'aria-hidden': true,
+      style: { display: 'block' }
+    }
+
+    function StarPattern() {
+      return h('svg', PATTERN_SVG,
+        h('path', { d: 'M8 1.8 9.6 5.9 14 6.3 10.8 9 11.8 13.1 8 10.8 4.2 13.1 5.2 9 2 6.3 6.4 5.9Z' })
+      )
+    }
+
+    function CatPattern() {
+      return h('svg', PATTERN_SVG,
+        h('path', { d: 'M3.2 8.3c0-2.7 2.1-4.6 4.8-4.6s4.8 1.9 4.8 4.6-2.1 4.7-4.8 4.7-4.8-2-4.8-4.7Z' }),
+        h('path', { d: 'M3.5 6.2 4 2.7 6.5 4.5' }),
+        h('path', { d: 'M12.5 6.2 12 2.7 9.5 4.5' }),
+        h('path', { d: 'M6.2 7.8h.01', strokeWidth: 1.9 }),
+        h('path', { d: 'M9.8 7.8h.01', strokeWidth: 1.9 }),
+        h('path', { d: 'M8 9.2v.7' }),
+        h('path', { d: 'M7.2 10.1c.2.3.5.5.8.5s.6-.2.8-.5' })
+      )
+    }
+
+    function DogPattern() {
+      return h('svg', PATTERN_SVG,
+        h('path', { d: 'M3.2 8.3c0-2.6 2.1-4.5 4.8-4.5s4.8 1.9 4.8 4.5-2.1 4.8-4.8 4.8-4.8-2.2-4.8-4.8Z' }),
+        h('path', { d: 'M3.4 6.3C1.8 6.3 1.8 9 3.1 10c.6.4 1.4.2 1.8-.4' }),
+        h('path', { d: 'M12.6 6.3C14.2 6.3 14.2 9 12.9 10c-.6.4-1.4.2-1.8-.4' }),
+        h('path', { d: 'M6.2 7.9h.01', strokeWidth: 1.9 }),
+        h('path', { d: 'M9.8 7.9h.01', strokeWidth: 1.9 }),
+        h('path', { d: 'M7.3 9.3h1.4l-.7 1Z', fill: 'currentColor', stroke: 'none' })
+      )
+    }
+
+    const PATTERN_STYLES = [
+      { id: 'star', Component: StarPattern },
+      { id: 'cat', Component: CatPattern },
+      { id: 'dog', Component: DogPattern }
+    ]
+    const PATTERN_BY_ID = new Map(PATTERN_STYLES.map((pattern) => [pattern.id, pattern]))
+    const MARK_BY_ID = new Map([...STYLES, ...PATTERN_STYLES].map((style) => [style.id, style]))
+
+    function SessionPattern({ sessionId, subscribe, getMark }) {
+      const mark = React.useSyncExternalStore(subscribe, () => getMark(sessionId))
+      const pattern = PATTERN_BY_ID.get(mark)
+      if (pattern === undefined) return null
+      return h(pattern.Component)
     }
 
     const VISUALLY_HIDDEN = {
@@ -165,6 +228,27 @@ window.__ModuleLoader__.load({
       return labelBar('none', label, 'transparent')
     }
 
+    function patternLabel(patternDef, label) {
+      return h('span', {
+        style: { display: 'flex', alignItems: 'center', width: '100%', minWidth: 0 }
+      },
+        h('span', {
+          style: {
+            flex: '1 1 auto',
+            width: '100%',
+            height: 18,
+            borderRadius: 4,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: 'var(--dsw-alias-label-secondary)',
+            backgroundColor: 'var(--dsw-alias-bg-layer-2)'
+          }
+        }, h(patternDef.Component)),
+        h('span', { key: 'label', style: VISUALLY_HIDDEN }, label)
+      )
+    }
+
     return {
       inject: ['contextMenus', 'locale', 'slots'],
       apply(ctx) {
@@ -173,6 +257,16 @@ window.__ModuleLoader__.load({
 
         let { marks, error: readError } = readMarks()
         if (readError !== null) console.warn('[dsh-session-mark] cannot read marks', readError)
+
+        const markListeners = new Set()
+        const subscribe = (listener) => {
+          markListeners.add(listener)
+          return () => { markListeners.delete(listener) }
+        }
+        const getMark = (sessionId) => marks[sessionId]
+        const notifyMarks = () => {
+          for (const listener of markListeners) listener()
+        }
 
         const style = document.createElement('style')
         style.dataset.plugin = PACKAGE
@@ -190,7 +284,7 @@ window.__ModuleLoader__.load({
         const setMark = (sessionId, styleId) => {
           if (!SAFE_ID.test(sessionId)) return
           if (styleId === null) delete marks[sessionId]
-          else if (STYLE_BY_ID.has(styleId)) marks[sessionId] = styleId
+          else if (MARK_BY_ID.has(styleId)) marks[sessionId] = styleId
           else return
           try {
             writeMarks(marks)
@@ -199,6 +293,7 @@ window.__ModuleLoader__.load({
             ctx.contextMenus.notify(t('save.failed'), false)
           }
           render()
+          notifyMarks()
         }
 
         ctx.effect(() => {
@@ -208,6 +303,7 @@ window.__ModuleLoader__.load({
             marks = next.marks
             if (next.error !== null) console.warn('[dsh-session-mark] cannot reload marks', next.error)
             render()
+            notifyMarks()
           }
           window.addEventListener('storage', onStorage)
           return () => window.removeEventListener('storage', onStorage)
@@ -219,6 +315,11 @@ window.__ModuleLoader__.load({
             () => h(MenuTag)
           )
         })
+
+        ctx.slots.inject('sidebar.session.row.leading', () => ctx.slots.register(
+          { name: 'sidebar.session.row.leading', id: 'session-mark.pattern', order: 50 },
+          ({ sessionId }) => h(SessionPattern, { sessionId, subscribe, getMark })
+        ))
 
         ctx.effect(() => ctx.contextMenus.register({
           id: 'session-mark',
@@ -234,6 +335,11 @@ window.__ModuleLoader__.load({
                   id: styleDef.id,
                   label: styleLabel(styleDef, t(`style.${styleDef.id}`)),
                   run: () => setMark(sessionId, styleDef.id)
+                })),
+                ...PATTERN_STYLES.map((patternDef) => ({
+                  id: patternDef.id,
+                  label: patternLabel(patternDef, t(`pattern.${patternDef.id}`)),
+                  run: () => setMark(sessionId, patternDef.id)
                 })),
                 {
                   id: 'none',

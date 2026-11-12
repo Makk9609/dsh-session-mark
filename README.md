@@ -1,7 +1,8 @@
 # dsh-session-mark
 
-A plugin for the DeepSeek Harness left session list. It adds a gradient background
-to a session row so you can tell sessions apart and avoid opening the wrong one.
+A plugin for the DeepSeek Harness left session list. It adds a gradient or a
+hand-drawn line pattern to a session row so you can tell sessions apart and avoid
+opening the wrong one.
 
 English | [中文](README.zh.md)
 
@@ -26,8 +27,10 @@ clears the mark.
 
 ## Notes
 
-- Eight low-saturation gradients; light and dark themes.
-- Only the row background changes. No text, badge, border, or layout change.
+- Eight gradient styles and three hand-drawn line patterns (star, cat, dog);
+  light and dark themes.
+- Gradient styles tint the row; pattern styles show a small line icon at the
+  start. No text, badge, border, or layout change.
 - Marks are stored in the browser (`localStorage`), so they survive a reload.
 - Only the left session list.
 
